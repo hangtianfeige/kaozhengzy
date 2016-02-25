@@ -16,18 +16,18 @@
         />
 
     <RelativeLayout
-        android:layout_marginLeft="20dp"
-        android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="65dp"
+        android:layout_marginLeft="20dp"
+        android:layout_weight="1"
         >
 
         <TextView
             android:id="@+id/list_item_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
             android:text="你好"
             android:textSize="20dp"
             />
@@ -35,8 +35,8 @@
         <TextView
             android:id="@+id/list_item_time"
             android:layout_width="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:text="09:11"/>
     </RelativeLayout>
 

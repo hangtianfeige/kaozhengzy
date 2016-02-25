@@ -104,7 +104,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         btnLiniankaoti.setOnClickListener(this);
         btnXiangguanxinxi.setOnClickListener(this);
         btnXiangguanzl.setOnClickListener(this);
-        listTuisong.setAdapter(new mylistadapter(this, logoResIds, titlecontent, titletime));
+        listTuisong.setAdapter(new mylistadapter(this, logoResIds, titlecontent, titletime, R.layout.shouye_list_item));
 
     }
 
