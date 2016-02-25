@@ -1,5 +1,6 @@
 package com.example.administrator.kaozhengzy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -86,6 +87,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         ;
     };
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,7 +193,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 Toast.makeText(this, "搜索按钮", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_liniankaoti:
-                Toast.makeText(this, "历年考题", Toast.LENGTH_SHORT).show();
+                intent = new Intent(this, LiNianKaoTiActivity.class);
+                startActivity(intent);
                 break;
             case R.id.btn_xiangguanxinxi:
                 Toast.makeText(this, "相关信息", Toast.LENGTH_SHORT).show();
