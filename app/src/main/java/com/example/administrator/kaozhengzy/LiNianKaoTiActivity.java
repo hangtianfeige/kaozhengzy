@@ -1,6 +1,7 @@
 package com.example.administrator.kaozhengzy;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,7 +30,9 @@ public class LiNianKaoTiActivity extends Activity {
         grdvKaoti.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(LiNianKaoTiActivity.this, position + "", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LiNianKaoTiActivity.this, kaotixiangqing.class);
+                intent.putExtra("year", iconName[position]);
+                startActivity(intent);
             }
         });
     }
