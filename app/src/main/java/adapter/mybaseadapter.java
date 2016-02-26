@@ -23,6 +23,13 @@ public abstract class mybaseadapter extends BaseAdapter {
         this.layout = layout;
     }
 
+    public mybaseadapter(Context context, String[] titlecontent, String[] titletime, int layout) {
+        this.context = context;
+        this.titlecontent = titlecontent;
+        this.titletime = titletime;
+        this.layout = layout;
+    }
+
     public mybaseadapter(Context context, int[] logoResIds, String[] titlecontent, int layout) {
         this.context = context;
         this.logoResIds = logoResIds;

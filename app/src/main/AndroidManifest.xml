@@ -3,6 +3,7 @@
     package="com.example.administrator.kaozhengzy"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,6 +21,7 @@
         </activity>
         <activity android:name=".LiNianKaoTiActivity"></activity>
         <activity android:name=".kaotixiangqing"></activity>
+        <activity android:name=".WebView_activity"></activity>
     </application>
 
 </manifest>

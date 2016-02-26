@@ -11,4 +11,9 @@
         android:layout_height="wrap_content"
         titlelayout:titletext="考题详情"
         ></com.example.administrator.kaozhengzy.titlelayout>
+
+    <ListView
+        android:id="@+id/list_kaoti"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
 </LinearLayout>
