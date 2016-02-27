@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.kaozhengzy.R;
+import com.example.administrator.kaozhengzy.XiangGuanZl;
 
 /**
  * Created by Administrator on 2016/2/24.
@@ -14,7 +15,8 @@ import com.example.administrator.kaozhengzy.R;
 public class mylistadapter extends mybaseadapter {
     private String biaozhi;
 
-    public mylistadapter(Context context, int[] logoResIds, String[] titlecontent, String[] titletime, int layout) {
+    public mylistadapter(Context context, int[] logoResIds, String[] titlecontent, String[]
+            titletime, int layout) {
         super(context, logoResIds, titlecontent, titletime, layout);
         biaozhi = "all";
     }
@@ -36,6 +38,12 @@ public class mylistadapter extends mybaseadapter {
 
     }
 
+    public mylistadapter(Context context, String[] logoResIds, String[] titlecontent, String[]
+            titletime, int layout) {
+        super(context, logoResIds, titlecontent, titletime, layout);
+        biaozhi = "3-String";
+    }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
@@ -49,6 +57,9 @@ public class mylistadapter extends mybaseadapter {
             } else if (biaozhi == "no time") {
                 holder.logo = (ImageView) convertView.findViewById(R.id.list_item_logo);
             } else if (biaozhi == "no picture") {
+                holder.time = (TextView) convertView.findViewById(R.id.list_item_time);
+            } else if (biaozhi == "3-String") {
+                holder.titlezhen = (TextView) convertView.findViewById(R.id.list_item_titlezhen);
                 holder.time = (TextView) convertView.findViewById(R.id.list_item_time);
             }
             holder.title = (TextView) convertView.findViewById(R.id.list_item_title);
@@ -73,7 +84,7 @@ public class mylistadapter extends mybaseadapter {
     // 依据item的layout
     class ViewHolder {
 
-
+        TextView titlezhen;
         ImageView logo;
         TextView title;
         TextView time;

@@ -22,6 +22,7 @@
         <activity android:name=".LiNianKaoTiActivity"></activity>
         <activity android:name=".kaotixiangqing"></activity>
         <activity android:name=".WebView_activity"></activity>
+        <activity android:name=".XiangGuanZl"></activity>
     </application>
 
 </manifest>

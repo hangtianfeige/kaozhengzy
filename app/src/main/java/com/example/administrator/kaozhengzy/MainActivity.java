@@ -106,7 +106,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         btnLiniankaoti.setOnClickListener(this);
         btnXiangguanxinxi.setOnClickListener(this);
         btnXiangguanzl.setOnClickListener(this);
-        listTuisong.setAdapter(new mylistadapter(this, logoResIds, titlecontent, titletime, R.layout.shouye_list_item));
+        listTuisong.setAdapter(new mylistadapter(this, logoResIds, titlecontent, titletime, R
+                .layout.shouye_list_item));
 
     }
 
@@ -199,10 +200,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.btn_xiangguanxinxi:
-                Toast.makeText(this, "相关信息", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.btn_xiangguanzl:
-                Toast.makeText(this, "相关资料", Toast.LENGTH_SHORT).show();
+                intent = new Intent(this, XiangGuanZl.class);
+                startActivity(intent);
                 break;
 
 

@@ -1,13 +1,10 @@
 package com.example.administrator.kaozhengzy;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-
 import adapter.mylistadapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,7 +21,7 @@ public class kaotixiangqing extends Activity {
     ListView listKaoti;
     private String year;
     private Intent intent;
-    private String[] liebiao = {"http://www.baidu.com", "http://www.kaoshizl.cn", "http://www" +
+    private String[] liebiao = {"http://pan.baidu.com/s/1c1r8V9e", "http://www.kaoshizl.cn", "http://www" +
             ".kaoshizl.cn",
             "http://pan.baidu.com/s/1pK4AkbD", "http://www.kaoshizl.cn",
             "http://www.kaoshizl.cn", "http://www.kaoshizl.cn"};

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:titlelayout="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <com.example.administrator.kaozhengzy.titlelayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        titlelayout:titletext="相关资料"
+        ></com.example.administrator.kaozhengzy.titlelayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:gravity="center_horizontal"
+        android:text="PPT资源"
+        android:textSize="15pt"
+        />
+
+    <ListView
+        android:id="@+id/list_xiangguanzl_ppt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="视频资源"
+        android:textSize="15pt"
+        />
+
+    <ListView
+        android:id="@+id/list_xiangguanzl_vido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+
+</LinearLayout>

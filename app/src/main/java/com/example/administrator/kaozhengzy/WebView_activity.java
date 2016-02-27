@@ -1,7 +1,6 @@
 package com.example.administrator.kaozhengzy;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -21,7 +20,6 @@ import butterknife.ButterKnife;
 public class WebView_activity extends Activity {
     @Bind(R.id.web_view)
     WebView webView;
-    public static ProgressDialog dialog;
     private PromptManager manager;
 
     @Override
@@ -44,6 +42,7 @@ public class WebView_activity extends Activity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 manager.showProgress(WebView_activity.this);
+
             }
 
 
@@ -53,6 +52,7 @@ public class WebView_activity extends Activity {
             }
 
         });
+
         webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         WebSettings settings = webView.getSettings();
@@ -62,6 +62,7 @@ public class WebView_activity extends Activity {
         settings.setUseWideViewPort(true); // 为图片添加放大缩小功能
         webView.loadUrl(url);
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
