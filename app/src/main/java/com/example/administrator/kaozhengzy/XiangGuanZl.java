@@ -3,31 +3,44 @@ package com.example.administrator.kaozhengzy;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import adapter.json_list_adapter;
 import adapter.mylistadapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import javabean.shipin;
+import utils.DateUtil;
+import utils.HttpCallbackListener;
+import utils.HttpUtil;
 
 /**
  * 作者：刘帅 on 2016/2/27 09:49
  * 邮箱：857279611@qq.com
  */
-public class XiangGuanZl extends Activity {
+public class XiangGuanZl extends Activity implements XListView.IXListViewListener {
 
     @Bind(R.id.list_xiangguanzl_ppt)
     ListView listXiangguanzlPpt;
     @Bind(R.id.list_xiangguanzl_vido)
-    ListView listXiangguanzlVido;
+    XListView listXiangguanzlVido;
     private String[] liebiao = {"http://pan.baidu.com/s/1c1r8V9e", "http://www.kaoshizl.cn",
             "http://www" +
                     ".kaoshizl.cn",
             "http://pan.baidu.com/s/1pK4AkbD", "http://www.kaoshizl.cn",
             "http://www.kaoshizl.cn", "http://www.kaoshizl.cn"};
-    private String[] kaotidesc = {"上半年模拟一", "上半年模拟一", "上半年模拟一", "上半年模拟一", "上半年模拟一", "上半年模拟一",
-            "上半年模拟一"};
 
     private int[] logoResIds = {R.drawable.tianjindaxue, R.drawable.tianjingongydaxue, R.drawable
             .tianjinkejidaxue, R
@@ -37,26 +50,110 @@ public class XiangGuanZl extends Activity {
             "2016-2-24 11:17",
             "2016-2-24 11:17"};
     private Intent intent;
+    private json_list_adapter adapter;
+    private int count;
+    private int oldsize;
+    private SimpleDateFormat sdf = DateUtil.getSimpleDateFormat();
+    private List<shipin> list = new ArrayList<shipin>();
+    private javabean.shipin shipinbean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.xiangguanzl);
         ButterKnife.bind(this);
+        init();
+        listXiangguanzlVido.setPullLoadEnable(true);// 开启加载更多
+        listXiangguanzlVido.setPullRefreshEnable(true);// 开启下拉刷新
+
         listXiangguanzlPpt.setAdapter(new mylistadapter(this, logoResIds, titlecontent, titletime, R
                 .layout.shouye_list_item));
-        listXiangguanzlVido.setAdapter(new mylistadapter(this, kaotidesc, liebiao, titletime, R
-                .layout
-                .xiangguanzl_shipin_item));
+
+
+        adapter = new json_list_adapter(this, list, R.layout.xiangguanzl_shipin_item);
+        listXiangguanzlVido.setAdapter(adapter);
+
+
+        listXiangguanzlVido.setXListViewListener(this);
+
+
         listXiangguanzlVido.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 intent = new Intent(XiangGuanZl.this, WebView_activity.class);
-                intent.putExtra("url", liebiao[position]);
+                intent.putExtra("url", list.get(position).getUrl());
                 startActivity(intent);
             }
         });
+    }
+
+
+    public void init() {
+
+        HttpUtil.sendHttpRequest("http://115.159.107.45/kaoshizy/shipin.php", new
+                HttpCallbackListener() {
+                    @Override
+                    public void onFinish(String response) {
+                        // 在这里根据返回内容执行具体的逻辑
+                        parseJSONWithJSONObject(response);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        // 在这里对异常情况进行处理
+                        System.out.println("获取失败");
+
+                    }
+                });
+
+
+    }
+
+    @Override
+    public void onRefresh() {
+        list.clear();
+        init();
+        listXiangguanzlVido.setRefreshTime(sdf.format(new Date()));
+        adapter.notifyDataSetChanged();
+        listXiangguanzlVido.stopRefresh();// 让下拉刷新的圈圈消失
+        count = 0;
+    }
+
+    @Override
+    public void onLoadMore() {
+
+        if (count == 1) {
+            Toast.makeText(XiangGuanZl.this, "没有历史了", Toast.LENGTH_SHORT).show();
+            listXiangguanzlVido.stopLoadMore();// 让加载更多的圈圈消失
+            return;
+        }
+        oldsize = list.size();
+        init();//再次从服务器获取数据（需要替换成自己的代码）
+        listXiangguanzlVido.setRefreshTime(sdf.format(new Date()));
+        adapter.notifyDataSetChanged();
+        listXiangguanzlVido.stopLoadMore();// 让加载更多的圈圈消失
+        listXiangguanzlVido.setSelection(oldsize);
+        count = 1;
+    }
+
+    private void parseJSONWithJSONObject(String jsonData) {
+        try {
+            JSONArray jsonArray = new JSONArray(jsonData);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String name = jsonObject.getString("name");
+                String time = jsonObject.getString("time");
+                String url = jsonObject.getString("url");
+                shipinbean = new shipin();
+                shipinbean.setName(name);
+                shipinbean.setTime(time);
+                shipinbean.setUrl(url);
+                list.add(shipinbean);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

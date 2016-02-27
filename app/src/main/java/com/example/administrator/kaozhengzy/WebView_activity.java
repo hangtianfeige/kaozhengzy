@@ -12,6 +12,7 @@ import android.webkit.WebViewClient;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import utils.PromptManager;
 
 /**
  * 作者：刘帅 on 2016/2/26 11:53

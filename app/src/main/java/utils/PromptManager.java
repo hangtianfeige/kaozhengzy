@@ -1,4 +1,4 @@
-package com.example.administrator.kaozhengzy;
+package utils;
 
 /**
  * 作者：刘帅 on 2016/2/26 12:21
@@ -13,6 +13,8 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.widget.Toast;
+
+import com.example.administrator.kaozhengzy.R;
 
 
 /**

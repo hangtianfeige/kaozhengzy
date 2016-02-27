@@ -57,6 +57,7 @@ public abstract class mybaseadapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+
         return titlecontent.length;
     }
 

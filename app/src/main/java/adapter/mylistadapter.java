@@ -59,7 +59,7 @@ public class mylistadapter extends mybaseadapter {
             } else if (biaozhi == "no picture") {
                 holder.time = (TextView) convertView.findViewById(R.id.list_item_time);
             } else if (biaozhi == "3-String") {
-                holder.titlezhen = (TextView) convertView.findViewById(R.id.list_item_titlezhen);
+                holder.titlezhen = (TextView) convertView.findViewById(R.id.list_item_title);
                 holder.time = (TextView) convertView.findViewById(R.id.list_item_time);
             }
             holder.title = (TextView) convertView.findViewById(R.id.list_item_title);
