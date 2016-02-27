@@ -200,7 +200,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.btn_xiangguanxinxi:
-
+                intent = new Intent(this, XiangGuanXinXi.class);
+                startActivity(intent);
                 break;
             case R.id.btn_xiangguanzl:
                 intent = new Intent(this, XiangGuanZl.class);
