@@ -3,9 +3,11 @@ package com.example.administrator.kaozhengzy;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,6 +23,7 @@ import javabean.kaotiliebiao;
 import javabean.shipin;
 import utils.HttpCallbackListener;
 import utils.HttpUtil;
+import utils.PromptManager;
 
 /**
  * Created by Administrator on 2016/2/25.
@@ -28,11 +31,9 @@ import utils.HttpUtil;
 public class LiNianKaoTiActivity extends Activity {
     @Bind(R.id.grdv_kaoti)
     GridView grdvKaoti;
-
-
-    private List<kaotiliebiao> list = new ArrayList<>();
+    private List<kaotiliebiao> list1 = new ArrayList<>();
     private kaotiliebiao kaotiliebiaobean;
-
+    private mygradviewadapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +41,16 @@ public class LiNianKaoTiActivity extends Activity {
         setContentView(R.layout.liniankaoti);
         ButterKnife.bind(this);
         init();
-        grdvKaoti.setAdapter(new mygradviewadapter(this, list, R.layout
-                .mygradview_kaoti_item));
+
+        SystemClock.sleep(500);
+        adapter = new mygradviewadapter(this, list1, R.layout
+                .mygradview_kaoti_item);
+        grdvKaoti.setAdapter(adapter);
         grdvKaoti.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(LiNianKaoTiActivity.this, kaotixiangqing.class);
-                intent.putExtra("year", list.get(position).getNianfen());
+                intent.putExtra("year", list1.get(position).getNianfen());
                 startActivity(intent);
             }
         });
@@ -81,10 +85,17 @@ public class LiNianKaoTiActivity extends Activity {
                 String nianfen = jsonObject.getString("nianfen");
                 kaotiliebiaobean = new kaotiliebiao();
                 kaotiliebiaobean.setNianfen(nianfen);
-                list.add(kaotiliebiaobean);
+                list1.add(kaotiliebiaobean);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        list1.clear();
+        adapter.notifyDataSetChanged();
     }
 }

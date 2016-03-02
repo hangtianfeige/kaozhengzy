@@ -196,6 +196,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 Toast.makeText(this, "搜索按钮", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_liniankaoti:
+                Toast.makeText(this, "正在加载中", Toast.LENGTH_SHORT).show();
                 intent = new Intent(this, LiNianKaoTiActivity.class);
                 startActivity(intent);
                 break;
