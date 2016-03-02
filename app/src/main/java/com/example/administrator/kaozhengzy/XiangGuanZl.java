@@ -51,11 +51,11 @@ public class XiangGuanZl extends Activity implements XListView.IXListViewListene
             "2016-2-24 11:17"};
     private Intent intent;
     private json_list_adapter adapter;
-    private int count;
+    private int count = 0;
     private int oldsize;
     private SimpleDateFormat sdf = DateUtil.getSimpleDateFormat();
     private List<shipin> list = new ArrayList<shipin>();
-    private javabean.shipin shipinbean;
+    private shipin shipinbean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,22 +68,16 @@ public class XiangGuanZl extends Activity implements XListView.IXListViewListene
 
         listXiangguanzlPpt.setAdapter(new mylistadapter(this, logoResIds, titlecontent, titletime, R
                 .layout.shouye_list_item));
-
-
         adapter = new json_list_adapter(this, list, R.layout.xiangguanzl_shipin_item);
         listXiangguanzlVido.setAdapter(adapter);
-
-
         listXiangguanzlVido.setXListViewListener(this);
-
-
         listXiangguanzlVido.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 intent = new Intent(XiangGuanZl.this, WebView_activity.class);
-                intent.putExtra("url", list.get(position).getUrl());
+                intent.putExtra("url", list.get(position - 1).getUrl());
                 startActivity(intent);
             }
         });
@@ -107,8 +101,6 @@ public class XiangGuanZl extends Activity implements XListView.IXListViewListene
 
                     }
                 });
-
-
     }
 
     @Override

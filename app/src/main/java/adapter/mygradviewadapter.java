@@ -11,17 +11,49 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.example.administrator.kaozhengzy.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javabean.kaotiliebiao;
+
 /**
  * Created by Administrator on 2016/2/25.
  */
-public class mygradviewadapter extends mybaseadapter {
-    public mygradviewadapter(Context context, String[] titlecontent, int layout) {
-        super(context, titlecontent, layout);
+public class mygradviewadapter extends BaseAdapter {
+
+    private Context context;
+    private List<kaotiliebiao> list;
+    private int layout;
+
+    public mygradviewadapter(Context context, List<kaotiliebiao> list, int layout) {
+        this.list = list;
+        this.context = context;
+        this.layout = layout;
     }
+
+    @Override
+    /**
+     * 获得页面的总数
+     */
+    public int getCount() {
+        return list.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -36,7 +68,7 @@ public class mygradviewadapter extends mybaseadapter {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.logo.setImageBitmap(drawTextToBitmap(context, R
-                .drawable.mygridview, titlecontent[position]));
+                .drawable.mygridview, list.get(position).getNianfen()));
         return convertView;
     }
 
