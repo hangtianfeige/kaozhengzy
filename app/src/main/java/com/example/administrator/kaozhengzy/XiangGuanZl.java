@@ -3,6 +3,8 @@ package com.example.administrator.kaozhengzy;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.LogRecord;
 
 import adapter.json_list_adapter;
 import adapter.mylistadapter;
@@ -33,6 +36,14 @@ import utils.HttpUtil;
  */
 public class XiangGuanZl extends Activity implements XListView.IXListViewListener {
 
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
+                Toast.makeText(XiangGuanZl.this, "没有历史", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
     @Bind(R.id.list_xiangguanzl_ppt)
     ListView listXiangguanzlPpt;
     @Bind(R.id.list_xiangguanzl_vido)
@@ -52,7 +63,7 @@ public class XiangGuanZl extends Activity implements XListView.IXListViewListene
             "2016-2-24 11:17"};
     private Intent intent;
     private json_list_adapter adapter;
-    private int count = 0;
+    private int count = 1;
     private int oldsize;
     private SimpleDateFormat sdf = DateUtil.getSimpleDateFormat();
     private List<shipin> list = new ArrayList<shipin>();
@@ -112,24 +123,44 @@ public class XiangGuanZl extends Activity implements XListView.IXListViewListene
         listXiangguanzlVido.setRefreshTime(sdf.format(new Date()));
         adapter.notifyDataSetChanged();
         listXiangguanzlVido.stopRefresh();// 让下拉刷新的圈圈消失
-        count = 0;
+        count = 1;
+    }
+
+    public void initmore() {
+        HttpUtil.sendHttpRequest("http://115.159.107.45/kaoshizy/shipinmore.php?count=" + count, new
+                HttpCallbackListener() {
+                    @Override
+                    public void onFinish(String response) {
+                        if (response.contains("jiazaiwanbi")) {
+                            Message message = new Message();
+                            message.what = 1;
+                            handler.sendMessage(message); //  将Message 对象发送出去
+                        } else {
+                            // 在这里根据返回内容执行具体的逻辑
+                            parseJSONWithJSONObject(response);
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        // 在这里对异常情况进行处理
+                        System.out.println("获取失败");
+
+                    }
+                });
     }
 
     @Override
     public void onLoadMore() {
 
-        if (count == 1) {
-            Toast.makeText(XiangGuanZl.this, "没有历史了", Toast.LENGTH_SHORT).show();
-            listXiangguanzlVido.stopLoadMore();// 让加载更多的圈圈消失
-            return;
-        }
         oldsize = list.size();
-        init();//再次从服务器获取数据（需要替换成自己的代码）
-        listXiangguanzlVido.setRefreshTime(sdf.format(new Date()));
+        count++;
+        initmore();//再次从服务器获取数据（需要替换成自己的代码）
+        SystemClock.sleep(500);
         adapter.notifyDataSetChanged();
         listXiangguanzlVido.stopLoadMore();// 让加载更多的圈圈消失
         listXiangguanzlVido.setSelection(oldsize);
-        count = 1;
     }
 
     private void parseJSONWithJSONObject(String jsonData) {
