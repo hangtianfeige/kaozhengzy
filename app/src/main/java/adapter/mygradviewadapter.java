@@ -32,6 +32,7 @@ public class mygradviewadapter extends BaseAdapter {
 
     public mygradviewadapter(Context context, List<kaotiliebiao> list, int layout) {
         this.list = list;
+        list.toArray();
         this.context = context;
         this.layout = layout;
     }

@@ -3,6 +3,7 @@ package com.example.administrator.kaozhengzy;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -63,6 +64,7 @@ public class XiangGuanZl extends Activity implements XListView.IXListViewListene
         setContentView(R.layout.xiangguanzl);
         ButterKnife.bind(this);
         init();
+        SystemClock.sleep(100);
         listXiangguanzlVido.setPullLoadEnable(true);// 开启加载更多
         listXiangguanzlVido.setPullRefreshEnable(true);// 开启下拉刷新
 
@@ -147,5 +149,13 @@ public class XiangGuanZl extends Activity implements XListView.IXListViewListene
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        list.clear();
+        adapter.notifyDataSetChanged();
+
     }
 }

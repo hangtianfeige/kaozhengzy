@@ -95,7 +95,5 @@ public class LiNianKaoTiActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        list1.clear();
-        adapter.notifyDataSetChanged();
     }
 }

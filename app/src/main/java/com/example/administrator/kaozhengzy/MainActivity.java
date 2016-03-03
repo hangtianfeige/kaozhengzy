@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.app.ActionBarActivity;
@@ -20,12 +21,21 @@ import android.widget.Toast;
 
 import com.example.administrator.kaozhengzy.R;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import adapter.mylistadapter;
+import adapter.mylisttuiguang;
 import adapter.mypageadapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import javabean.kaotiliebiao;
+import javabean.tuiguang;
+import utils.HttpCallbackListener;
+import utils.HttpUtil;
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
     @Bind(R.id.edt_shousuo)
@@ -70,6 +80,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private String[] titletime = {"2016-2-24 11:17", "2016-2-24 11:17", "2016-2-24 11:17",
             "2016-2-24 11:17",
             "2016-2-24 11:17"};
+    private List<tuiguang> list = new ArrayList<>();
+    private tuiguang tuiguang1;
 
     /**
      * 判断是否执行自动滚动
@@ -89,6 +101,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         ;
     };
     private Intent intent;
+    private mylisttuiguang adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +110,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        init();
+        SystemClock.sleep(500);
         msg.setText(imageDescriptions[0]);
         imagelist = new ArrayList<ImageView>();
         initViewPager();
@@ -106,9 +121,48 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         btnLiniankaoti.setOnClickListener(this);
         btnXiangguanxinxi.setOnClickListener(this);
         btnXiangguanzl.setOnClickListener(this);
-        listTuisong.setAdapter(new mylistadapter(this, logoResIds, titlecontent, titletime, R
-                .layout.shouye_list_item));
+        adapter = new mylisttuiguang(this, list, R.layout.shouye_list_item);
+        listTuisong.setAdapter(adapter);
 
+    }
+
+    public void init() {
+
+        HttpUtil.sendHttpRequest("http://115.159.107.45/kaoshizy/tuiguang.php", new
+                HttpCallbackListener() {
+                    @Override
+                    public void onFinish(String response) {
+                        // 在这里根据返回内容执行具体的逻辑
+                        parseJSONWithJSONObject(response);
+
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        // 在这里对异常情况进行处理
+                        System.out.println("获取失败" + e);
+
+                    }
+                });
+    }
+
+    private void parseJSONWithJSONObject(String jsonData) {
+        try {
+            JSONArray jsonArray = new JSONArray(jsonData);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String content = jsonObject.getString("content");
+                String time = jsonObject.getString("time");
+                String url = jsonObject.getString("url");
+                tuiguang1 = new tuiguang();
+                tuiguang1.setContent(content);
+                tuiguang1.setTime(time);
+                tuiguang1.setUrl(url);
+                list.add(tuiguang1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initViewPagerScroll() {
@@ -186,6 +240,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     protected void onDestroy() {
         isrunning = false;
         super.onDestroy();
+
     }
 
 
@@ -212,4 +267,5 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         }
     }
+
 }
