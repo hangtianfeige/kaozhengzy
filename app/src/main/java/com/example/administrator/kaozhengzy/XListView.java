@@ -6,8 +6,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
@@ -235,8 +233,6 @@ public class XListView extends ListView implements OnScrollListener {
             }
         }
         mFooterView.setBottomMargin(height);
-
-//		setSelection(mTotalItemCount - 1); // scroll to bottom
     }
 
     private void resetFooterHeight() {

@@ -3,14 +3,14 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:padding="3dp"
+    android:layout_height="80dp">
 
     <TextView
         android:id="@+id/list_item_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
         android:text="上半年模拟一"
         android:textSize="30dp"
         />
@@ -18,12 +18,12 @@
     <TextView
         android:id="@+id/list_item_time"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
         android:layout_marginRight="5dp"
-        android:textSize="15dp"
         android:text="10:26"
+        android:textSize="15dp"
         />
 </RelativeLayout>
 

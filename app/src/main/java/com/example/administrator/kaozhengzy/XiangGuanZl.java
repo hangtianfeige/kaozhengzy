@@ -44,8 +44,6 @@ public class XiangGuanZl extends Activity implements XListView.IXListViewListene
             }
         }
     };
-    @Bind(R.id.list_xiangguanzl_ppt)
-    ListView listXiangguanzlPpt;
     @Bind(R.id.list_xiangguanzl_vido)
     XListView listXiangguanzlVido;
     private String[] liebiao = {"http://pan.baidu.com/s/1c1r8V9e", "http://www.kaoshizl.cn",
@@ -75,12 +73,10 @@ public class XiangGuanZl extends Activity implements XListView.IXListViewListene
         setContentView(R.layout.xiangguanzl);
         ButterKnife.bind(this);
         init();
-        SystemClock.sleep(100);
+        SystemClock.sleep(800);
         listXiangguanzlVido.setPullLoadEnable(true);// 开启加载更多
         listXiangguanzlVido.setPullRefreshEnable(true);// 开启下拉刷新
 
-        listXiangguanzlPpt.setAdapter(new mylistadapter(this, logoResIds, titlecontent, titletime, R
-                .layout.shouye_list_item));
         adapter = new json_list_adapter(this, list, R.layout.xiangguanzl_shipin_item);
         listXiangguanzlVido.setAdapter(adapter);
         listXiangguanzlVido.setXListViewListener(this);
@@ -99,7 +95,7 @@ public class XiangGuanZl extends Activity implements XListView.IXListViewListene
 
     public void init() {
 
-        HttpUtil.sendHttpRequest("http://115.159.107.45/kaoshizy/shipin.php", new
+        HttpUtil.sendHttpRequest("http://115.159.107.45/kaoshizy/shipinmore.php?count=" + count, new
                 HttpCallbackListener() {
                     @Override
                     public void onFinish(String response) {
@@ -157,7 +153,7 @@ public class XiangGuanZl extends Activity implements XListView.IXListViewListene
         oldsize = list.size();
         count++;
         initmore();//再次从服务器获取数据（需要替换成自己的代码）
-        SystemClock.sleep(500);
+        SystemClock.sleep(800);
         adapter.notifyDataSetChanged();
         listXiangguanzlVido.stopLoadMore();// 让加载更多的圈圈消失
         listXiangguanzlVido.setSelection(oldsize);
